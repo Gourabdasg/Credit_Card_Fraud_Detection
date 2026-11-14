@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.DS_Store
+.ipynb_checkpoints/
+
+# large datasets and trained models
+data/*.csv
+models/*.pkl
+models/*.joblib
+models/*.h5

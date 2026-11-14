@@ -1,0 +1,23 @@
+{
+  "n_test": 900,
+  "n_test_fraud": 22,
+  "train_counts_before_smote": [
+    4097,
+    103
+  ],
+  "train_counts_after_smote": [
+    4097,
+    4097
+  ],
+  "epochs_run": {
+    "LSTM": 13,
+    "CNN": 22
+  },
+  "meta_weights": {
+    "LSTM": 1.762,
+    "CNN": 3.105,
+    "NLP": 4.457
+  },
+  "tuned_threshold": 0.85,
+  "note": "Synthetic proxy data - pipeline-development results, not final results."
+}

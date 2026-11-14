@@ -1,0 +1,179 @@
+**REVIEW REPORT**** – 2**
+
+A REVIEW REPORT
+
+*Submitted by*
+
+**   ****  PREETAM BHATTACHARJEE****  ****    [****BWU/BTA/23/1****33]**
+
+**    **** ****GOURAB DAS                                     [****BWU/BTA/23/1****35]**
+
+**     ****TRIPTI CHOURASIYA****  ****                   ****[****BWU/BTA/23/****724****]**
+
+**     ****APURBA MUKHERJEE****  ****     ****             ****[****BWU/BTA/23/****177****]**
+
+*in partial fulfillment for the award of the degree** *
+
+*of*
+
+**BACHELOR OF TECHNOLOGY **
+
+IN
+
+COMPUTER SCIENCE & ENGINEERING – ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING
+
+**BRAINWARE UNIVERSITY**
+
+398, Ramkrishnapur Rd, near Jagadighata Market, Barasat, Kolkata, West Bengal - 700125
+
+		
+
+		
+
+		
+
+		
+
+		
+
+SEPTEMBER, 2026
+
+	
+
+**CREDIT CARD FRAUD AND ALERT SYSTEM USING DEEP LEARNING AND NLP**
+
+***Submitted by***
+
+**Preetam Bhattacharjee**** **** ****[230130017****37**** of 2023-24****,**** ****230103321****24****]**
+
+**Gourab Das**** ****                        **** ****[230130017****39**** ****of 2023-24****, 230103321****26****]**
+
+**Tripti**** Chourasiya**** ****           **** ****[****24013105717**** ****of 202****4****-2****5****, ****24011332058****]**
+
+**Apurba Mukherjee**** ****         **** ****[****2301****3001781**** ****of 202****3****-2****4****, ****23010332168****]**
+
+***in partial fulfillment for the award of the degree***
+
+***of***
+
+**BACHELOR OF TECHNOLOGY**** – ****COMPUTER SCIENCE ****&**** ENGINEERING**** – A****RTIFICIAL INTELLIGENCE AND MACHINE LEARNING**
+
+***in***
+
+**DEPARTMENT OF  COMPUTER SCIENCE ****&**** ENGINEERING**** ****– ****ARTIFICIAL INTELLIGENCE**
+
+**Supervisor Signature**
+
+		
+
+		
+
+		
+
+	
+
+	
+
+	
+
+	
+
+# Table of Contents
+
+	1. Abstract	4
+
+	2. Introduction	4
+
+	3. Literature Review	4
+
+	4. Methodology	4
+
+	4.1 Recap of Review-1 Work	4
+
+	4.2 Model Implementation	5
+
+	4.3 Training Setup	5
+
+	4.4 Updated System Flow	5
+
+	5. Result & Discussion	6
+
+	6. Conclusion	7
+
+	7. References	8
+
+# 1. Abstract
+
+This report presents the Review-2 progress of the Credit Card Fraud and Alert System, which combines deep learning and Natural Language Processing (NLP) to detect fraudulent transactions. Building on the Review-1 work (problem formulation, literature survey, and dataset collection/cleaning), this stage focuses on implementation: the deep learning branch, the NLP branch, and a fusion-based classification module have been coded and connected into an end-to-end pipeline. To validate the pipeline before committing to full training on the complete real dataset, a preliminary run was carried out on a proxy dataset that mirrors the real data's severe class imbalance. This preliminary run gives an initial, non-final indication of pipeline behaviour: the NLP branch achieved an F1-score of 0.806 and the fused model achieved an AUC-ROC of 0.914 on the proxy data. Full training and hyperparameter tuning on the complete real Kaggle dataset, along with the final LSTM/CNN architecture and the alert-generation module, are planned for Review-3.
+
+# 2. Introduction
+
+As established in Review-1, credit card fraud detection requires models that can capture both the behavioural patterns in structured transaction data and the contextual cues present in transaction-related text. Review-1 covered the problem background, objectives, and a brief literature survey, and concluded with the collection and cleaning of the Kaggle Credit Card Fraud Detection dataset.
+
+The objective of this Review-2 stage is to move from design to implementation: to build the deep-learning and NLP branches described in the proposed methodology, connect them through a fusion layer, and validate that the full pipeline runs correctly end-to-end. A preliminary trial run is used at this stage purely to confirm the pipeline's correctness and to surface early issues (such as class-imbalance handling and threshold selection) before the final, full-scale training on the complete dataset is carried out for Review-3.
+
+# 3. Literature Review
+
+The literature survey from Review-1 (Alghofaili et al., 2020[1]; Chen and Lai, 2021[2]; Mienye and Jere, 2024[3]; Sulaiman, Nadher and Hameed, 2024[4]) continues to guide the model design, particularly regarding the use of LSTM/CNN architectures and the need to address class imbalance. During implementation, additional attention was given to model-fusion strategies: simple score-averaging, as used in several hybrid fraud-detection studies, was adopted at this stage for its simplicity and interpretability, with more advanced fusion techniques (e.g. weighted or learned fusion) to be explored if time permits in Review-3.
+
+# 4. Methodology
+
+## 4.1 Recap of Review-1 Work
+
+The Kaggle Credit Card Fraud Detection dataset (284,807 transactions, 492 frauds, 30 features)[6] was collected, checked for missing/duplicate values, and prepared with scaling planned for the Amount/Time columns and SMOTE planned for class balancing, as detailed in the Review-1 report. This preparation forms the basis for the model implementation carried out in this stage.
+
+## 4.2 Model Implementation
+
+- Deep learning branch: implemented as a small multi-layer perceptron (MLP) at this stage, used as an initial proxy for the full LSTM/CNN architecture so that the end-to-end pipeline could be validated quickly; the final recurrent/convolutional architecture will be implemented and trained on the complete dataset for Review-3.
+
+- NLP branch: implemented using TF-IDF vectorisation of transaction-narration text followed by a logistic regression classifier, to detect fraud-indicative language patterns.
+
+- Fusion layer: implemented as an averaging of the two branches' predicted fraud probabilities, followed by a 0.5 decision threshold to classify each transaction as genuine or fraudulent.
+
+## 4.3 Training Setup
+
+- Environment: Python 3, scikit-learn for the branch models, Matplotlib for result visualization[5].
+
+- Preliminary validation data: a synthetic proxy dataset (6,000 samples) generated to match the real dataset's class-imbalance ratio, used only to confirm the pipeline trains and evaluates correctly end-to-end.
+
+- Split: 75% train / 25% test, stratified on the fraud label, consistent with the split strategy planned in Review-1.
+
+- Note: these preliminary results are from the proxy dataset, not the final real-data results; full training on the complete Kaggle dataset is planned for Review-3.
+
+## 4.4 Updated System Flow
+
+The figure below shows the same target pipeline presented in Review-1, now annotated with implementation status: stages shown in green are complete, the amber stage is implemented but currently uses a proxy model / preliminary run, and grey stages are planned for Review-3.
+
+# 5. Result & Discussion
+
+To validate the implemented pipeline before full-scale training, a preliminary run was carried out on a synthetic proxy dataset built to match the real dataset's severe class imbalance. These are pipeline-validation results, not final performance figures on the real dataset. The table below summarises the preliminary metrics for each branch and for the fused model.
+
+| **Branch / Model** | **Precision** | **Recall** | **F1-score** | **AUC-ROC** |
+| --- | --- | --- | --- | --- |
+| Deep Learning branch (MLP proxy) | 0.526 | 0.270 | 0.357 | 0.834 |
+| NLP branch (TF-IDF + LogReg) | 1.000 | 0.676 | 0.806 | 0.816 |
+| Fused model | 1.000 | 0.297 | 0.458 | 0.914 |
+
+The NLP branch alone performed strongly on the proxy data (F1-score 0.806), while the deep-learning proxy branch (a small MLP standing in for the planned LSTM/CNN) achieved a lower recall (0.270), which is expected since it is a simplified stand-in model rather than the final architecture. The naively-averaged fusion improved overall separability (AUC-ROC 0.914) but pulled recall down to 0.297 because the amber (proxy) branch's weaker predictions diluted the stronger NLP signal — this indicates that a smarter fusion strategy (e.g. weighted averaging or a learned meta-classifier) should be explored once the final LSTM/CNN branch is trained on the complete dataset.
+
+Overall, the preliminary run confirms that the data flow, branch models, fusion logic, and evaluation code all work correctly end-to-end. The next step is to replace the proxy MLP with the full LSTM/CNN architecture, retrain both branches on the complete real dataset with SMOTE-based class balancing, and re-tune the fusion threshold — all planned for Review-3.
+
+# 6. Conclusion
+
+This Review-2 report has documented the implementation of the Credit Card Fraud and Alert System's deep-learning branch, NLP branch, and fusion-based classifier, along with a preliminary pipeline-validation run on a proxy dataset. The results confirm that the overall architecture functions correctly and give early, non-final signals about branch performance and fusion behaviour. For Review-3, the work will focus on: (i) implementing and training the full LSTM/CNN architecture in place of the current MLP proxy, (ii) training and evaluating on the complete real Kaggle dataset with SMOTE-based class balancing, (iii) improving the fusion strategy, and (iv) implementing and testing the real-time alert-generation module.
+
+# 7. References
+
+[1]  Alghofaili, Y., Albattah, A. and Rassam, M.A. (2020) 'A financial fraud detection model based on LSTM deep learning technique', Journal of Applied Security Research, 15(4), pp.498-516.
+
+[2]  Chen, J.I.Z. and Lai, K.-L. (2021) 'Deep convolution neural network model for credit-card fraud detection and alert', Journal of Artificial Intelligence, 3(2), pp.101-112.
+
+[3]  Mienye, I.D. and Jere, N. (2024) 'Deep learning for credit card fraud detection: A review of algorithms, challenges, and solutions', IEEE Access, 12, pp.96893-96910.
+
+[4]  Sulaiman, S.S., Nadher, I. and Hameed, S.M. (2024) 'Credit card fraud detection using improved deep learning models', Computers, Materials & Continua, 78(1), pp.1049-1069.
+
+[5]  Pedregosa, F. et al. (2011) 'Scikit-learn: Machine learning in Python', Journal of Machine Learning Research, 12, pp.2825-2830.
+
+[6]  Kaggle (n.d.) Credit Card Fraud Detection Dataset. Available at: https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud (Accessed: 4 August 2026).
+
+3

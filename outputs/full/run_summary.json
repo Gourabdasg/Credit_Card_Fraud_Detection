@@ -1,0 +1,32 @@
+{
+  "dataset": {
+    "rows": 20000,
+    "fraud": 120,
+    "genuine": 19880,
+    "fraud_pct": 0.6
+  },
+  "split_mode": "stratified",
+  "window": 5,
+  "n_test": 2999,
+  "n_test_fraud": 18,
+  "train_counts_before_smote": [
+    13914,
+    84
+  ],
+  "train_counts_after_smote": [
+    13914,
+    13914
+  ],
+  "epochs_run": {
+    "LSTM": 4,
+    "CNN": 4
+  },
+  "meta_weights": {
+    "LSTM": 7.555,
+    "CNN": 0.132,
+    "NLP": 4.443
+  },
+  "tuned_threshold": 0.86,
+  "debug_sample": null,
+  "note": "NLP text is synthetic (Kaggle data has no narration column)."
+}

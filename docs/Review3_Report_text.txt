@@ -1,0 +1,211 @@
+**REVIEW REPORT**** – 3**
+
+A REVIEW REPORT
+
+*Submitted by*
+
+**   ****  PREETAM BHATTACHARJEE****  ****    [****BWU/BTA/23/1****33]**
+
+**    **** ****GOURAB DAS                                     [****BWU/BTA/23/1****35]**
+
+**     ****TRIPTI CHOURASIYA****  ****                   ****[****BWU/BTA/23/****724****]**
+
+**     ****APURBA MUKHERJEE****  ****     ****             ****[****BWU/BTA/23/****177****]**
+
+*in partial fulfillment for the award of the degree** *
+
+*of*
+
+**BACHELOR OF TECHNOLOGY **
+
+IN
+
+COMPUTER SCIENCE & ENGINEERING – ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING
+
+**BRAINWARE UNIVERSITY**
+
+398, Ramkrishnapur Rd, near Jagadighata Market, Barasat, Kolkata, West Bengal - 700125
+
+		
+
+		
+
+		
+
+		
+
+		
+
+AUGUST, 2026
+
+	
+
+**CREDIT CARD FRAUD AND ALERT SYSTEM USING DEEP LEARNING AND NLP**
+
+***Submitted by***
+
+**Preetam Bhattacharjee**** **** ****[230130017****37**** of 2023-24****,**** ****230103321****24****]**
+
+**Gourab Das**** ****                        **** ****[230130017****39**** ****of 2023-24****, 230103321****26****]**
+
+**Tripti**** Chourasiya**** ****           **** ****[****24013105717**** ****of 202****4****-2****5****, ****24011332058****]**
+
+**Apurba Mukherjee**** ****         **** ****[****2301****3001781**** ****of 202****3****-2****4****, ****23010332168****]**
+
+***in partial fulfillment for the award of the degree***
+
+***of***
+
+**BACHELOR OF TECHNOLOGY**** – ****COMPUTER SCIENCE ****&**** ENGINEERING**** – A****RTIFICIAL INTELLIGENCE AND MACHINE LEARNING**
+
+***in***
+
+**DEPARTMENT OF  COMPUTER SCIENCE ****&**** ENGINEERING**** ****– ****ARTIFICIAL INTELLIGENCE**
+
+**Supervisor Signature**
+
+		
+
+		
+
+		
+
+	
+
+	
+
+	
+
+	
+
+# Table of Contents
+
+	1. Abstract	4
+
+	2. Introduction	4
+
+	3. Literature Review	4
+
+	4. Methodology	5
+
+	4.1 Recap of Review-1 and Review-2	5
+
+	4.2 Data Preparation Updates	5
+
+	4.3 Model Implementation	5
+
+	4.4 Stacked Fusion and Threshold Tuning	5
+
+	4.5 Updated System Flow	5
+
+	5. Result & Discussion	6
+
+	6. Conclusion	8
+
+	7. References	8
+
+# 1. Abstract
+
+This report presents the Review-3 progress of the Credit Card Fraud and Alert System, which combines deep learning and Natural Language Processing (NLP) to detect fraudulent card transactions. Review-1 covered the problem formulation, literature survey and Kaggle dataset preparation, and Review-2 delivered a first end-to-end pipeline using a lightweight MLP as a stand-in for the deep model. In this stage, the proxy model has been replaced by the planned Long Short-Term Memory (LSTM) and one-dimensional Convolutional Neural Network (CNN) branches, SMOTE oversampling has been applied to the training split only, and the naive probability averaging has been replaced by a stacked meta-classifier with a validation-tuned decision threshold. All experiments were run on a synthetic proxy dataset that mirrors the class imbalance of the real data, because training on the complete Kaggle dataset is scheduled for Review-4. On the proxy test split, the stacked fusion model reached a precision of 0.842, a recall of 0.727, an F1-score of 0.780 and an AUC-ROC of 0.917, compared with an F1-score of 0.367 for simple averaging. These are pipeline-development results, not final performance figures.
+
+# 2. Introduction
+
+Credit card fraud detection must cope with extreme class imbalance and with fraud patterns that change over time. The proposed system addresses this by learning from structured transaction features with deep networks while analysing accompanying transaction text with NLP, and by fusing both sources of evidence into a single fraud decision that triggers an alert.
+
+The project is divided into six review stages. Review-1 established the problem, literature and data preparation; Review-2 built and validated the first working pipeline. The objective of Review-3 is to implement the actual deep-learning architectures (LSTM and 1D-CNN), integrate proper class-imbalance handling, and improve the fusion strategy that Review-2 identified as a weakness. Training on the complete real dataset, the alert module and the final evaluation are planned for Reviews 4, 5 and 6 respectively.
+
+# 3. Literature Review
+
+Recurrent networks, and in particular the LSTM introduced by Hochreiter and Schmidhuber (1997)  [4], are widely used for fraud detection because their gating mechanism can retain information over sequences of transactions; Alghofaili et al. (2020) applied an LSTM to financial fraud detection with encouraging results[1]. Convolutional models were used by Chen and Lai (2021) [3] to detect fraud and raise alerts, and Sulaiman, Nadher and Hameed (2024) [8] compared AutoEncoder, CNN and LSTM models and showed that tuning has a large effect on detection quality.
+
+Class imbalance is usually handled by resampling. SMOTE (Chawla et al., 2002) [2] synthesises new minority-class samples by interpolating between existing ones, and hybrid machine-learning and deep-learning pipelines that combine it with neural classifiers have reported improved minority-class recall (Khalid et al., 2024) [5]. Mienye and Jere (2024) [6] note that imbalance, concept drift and interpretability remain open challenges. These findings motivate the two main changes in this stage: SMOTE applied strictly to the training data, and a learned fusion of the branch outputs instead of fixed averaging.
+
+# 4. Methodology
+
+## 4.1 Recap of Review-1 and Review-2
+
+The Kaggle Credit Card Fraud Detection dataset (284,807 transactions, 492 frauds) [9] was collected and cleaned in Review-1. In Review-2 a first pipeline with an MLP proxy branch, a TF-IDF NLP branch and averaging-based fusion was validated on a proxy dataset. Its main finding was that averaging let a weak branch dilute a strong one, lowering recall.
+
+## 4.2 Data Preparation Updates
+
+- Split: stratified 70:15:15 train / validation / test split, as planned in Review-1 (test set: 900 samples, of which 22 are fraud).
+
+- SMOTE: applied to the training split only, so no synthetic sample leaks into validation or test data. The training set changed from 4097 genuine / 103 fraud to 4097 / 4097.
+
+- Scaling: standard scaling fitted on the training split only.
+
+- Sequence shaping: the Kaggle rows are individual transactions, so the 29 numeric features were zero-padded to 30 and reshaped into 5 time-steps of 6 features, giving the LSTM and CNN a pseudo-sequence input. Ordering real transactions by cardholder and time is planned for later reviews.
+
+- Data used: a synthetic proxy dataset of 6,000 samples (about 2% fraud) with synthetic transaction-narration text, because the full Kaggle dataset is used from Review-4.
+
+## 4.3 Model Implementation
+
+- LSTM branch: LSTM layer (32 units), dropout 0.3, dense layer (16, ReLU), sigmoid output.
+
+- 1D-CNN branch: Conv1D (32 filters, kernel 3), global max pooling, dropout 0.3, dense layer (16, ReLU), sigmoid output.
+
+- Training: Adam optimiser (learning rate 0.001), binary cross-entropy loss, batch size 64, up to 40 epochs with early stopping (patience 5) on validation loss. Early stopping ended LSTM training at 18 epochs and CNN training at 29 epochs.
+
+- NLP branch: TF-IDF vectorisation of the narration text and a class-weighted logistic regression classifier.
+
+- Environment: Python 3, TensorFlow/Keras, scikit-learn, imbalanced-learn and Matplotlib [7].
+
+## 4.4 Stacked Fusion and Threshold Tuning
+
+The predicted fraud probabilities of the LSTM, CNN and NLP branches on the validation split are used to train a class-weighted logistic regression meta-classifier, which learns how much to trust each branch. The decision threshold is then chosen on the validation split to maximise the F1-score, instead of using a fixed 0.5. The learned meta-weights were 1.503 (LSTM), 2.606 (CNN) and 5.444 (NLP), and the tuned threshold was 0.88.
+
+## 4.5 Updated System Flow
+
+The figure below updates the project flow with the status of every stage across the six reviews: green stages are complete, and grey stages are planned for Reviews 4 to 6.
+
+*Figure 1: Project flow and status after Review-3*
+
+# 5. Result & Discussion
+
+Table 1 reports test-split metrics for each branch and for the two fusion strategies. All figures come from the synthetic proxy data and are used to verify and compare the pipeline components; they are not final results on the real Kaggle dataset.
+
+| **Model** | **Precision** | **Recall** | **F1-score** | **AUC-ROC** |
+| --- | --- | --- | --- | --- |
+| LSTM branch | 0.250 | 0.455 | 0.323 | 0.688 |
+| 1D-CNN branch | 0.164 | 0.500 | 0.247 | 0.714 |
+| NLP branch (TF-IDF + LogReg) | 1.000 | 0.636 | 0.778 | 0.837 |
+| Simple-average fusion (LSTM + NLP) | 0.333 | 0.409 | 0.367 | 0.922 |
+| **Stacked fusion (LSTM + CNN + NLP)** | **0.842** | **0.727** | **0.780** | **0.917** |
+
+*Table 1: Test-split performance on proxy data (stacked fusion highlighted)*
+
+*Figure 2: ROC curves of the individual branches and the stacked fusion model*
+
+*Figure 3: Confusion matrix of the stacked fusion model*
+
+Stacked fusion clearly outperformed simple averaging: the F1-score rose from 0.367 to 0.780 and precision from 0.333 to 0.842, while recall also improved from 0.409 to 0.727. This confirms the Review-2 observation that fixed averaging is a poor fusion rule when branch quality differs, and that learning the weights and tuning the threshold is a better design. The meta-classifier gave the NLP branch the largest weight, which is consistent with it being the strongest single branch.
+
+The deep branches on their own were modest (AUC 0.688 for the LSTM and 0.714 for the CNN). This should not be over-interpreted. The proxy features are not truly sequential, so the pseudo-sequence reshaping gives recurrent and convolutional layers little structure to exploit, and the Review-2 MLP scored higher on its own split (AUC 0.834), although that run used a different split and no SMOTE, so the two are not directly comparable. Real transactions ordered per cardholder are expected to suit LSTM and CNN models much better.
+
+Limitations: (i) the test split contains only 22 fraud cases, so each metric moves noticeably with a few predictions; (ii) the synthetic narration text is strongly linked to the fraud label, which makes the NLP branch look better than text from real transactions would; (iii) the meta-classifier and the threshold were fitted on a validation split with a similarly small number of frauds, which may make the fusion figures somewhat optimistic. Results on the full real dataset in Review-4 will address these points.
+
+# 6. Conclusion
+
+In Review-3 the proxy model was replaced by implemented LSTM and 1D-CNN branches, SMOTE was integrated on the training split, and a stacked meta-classifier with a validation-tuned threshold replaced simple averaging. On the proxy data the stacked model reached an F1-score of 0.780 and an AUC-ROC of 0.917, a clear improvement over averaging, while the deep branches alone showed that the pseudo-sequence input is a limitation. Review-4 will train and tune all branches on the complete real Kaggle dataset with properly ordered transaction sequences, Review-5 will build the real-time alert module, and Review-6 will present the final evaluation and documentation.
+
+# 7. References
+
+[1]  Alghofaili, Y., Albattah, A. and Rassam, M.A. (2020) 'A financial fraud detection model based on LSTM deep learning technique', Journal of Applied Security Research, 15(4), pp.498-516.
+
+[2]  Chawla, N.V., Bowyer, K.W., Hall, L.O. and Kegelmeyer, W.P. (2002) 'SMOTE: Synthetic minority over-sampling technique', Journal of Artificial Intelligence Research, 16, pp.321-357.
+
+[3]  Chen, J.I.Z. and Lai, K.-L. (2021) 'Deep convolution neural network model for credit-card fraud detection and alert', Journal of Artificial Intelligence, 3(2), pp.101-112.
+
+[4]  Hochreiter, S. and Schmidhuber, J. (1997) 'Long short-term memory', Neural Computation, 9(8), pp.1735-1780.
+
+[5]  Khalid, A., Owoh, N., Uthmani, O., Ashawa, M., Osamor, J. and John, A. (2024) 'Enhancing credit card fraud detection with a hybrid approach using machine and deep learning', Scientific Reports.
+
+[6]  Mienye, I.D. and Jere, N. (2024) 'Deep learning for credit card fraud detection: A review of algorithms, challenges, and solutions', IEEE Access, 12, pp.96893-96910.
+
+[7]  Pedregosa, F. et al. (2011) 'Scikit-learn: Machine learning in Python', Journal of Machine Learning Research, 12, pp.2825-2830.
+
+[8]  Sulaiman, S.S., Nadher, I. and Hameed, S.M. (2024) 'Credit card fraud detection using improved deep learning models', Computers, Materials & Continua, 78(1), pp.1049-1069.
+
+[9]  Kaggle (n.d.) Credit Card Fraud Detection Dataset. Available at: https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud (Accessed: 4 November 2026).
+
+3

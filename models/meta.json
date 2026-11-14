@@ -1,0 +1,12 @@
+{
+  "window": 5,
+  "n_features": 30,
+  "threshold": 0.86,
+  "meta_weights": {
+    "LSTM": 7.555,
+    "CNN": 0.132,
+    "NLP": 4.443
+  },
+  "split_mode": "stratified",
+  "debug_sample": null
+}

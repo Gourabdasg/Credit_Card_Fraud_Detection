@@ -1,0 +1,163 @@
+**REVIEW REPORT**** – 1**
+
+A REVIEW REPORT
+
+*Submitted by*
+
+**   ****  PREETAM BHATTACHARJEE****  ****    [****BWU/BTA/23/1****33]**
+
+**    **** ****GOURAB DAS                                     [****BWU/BTA/23/1****35]**
+
+**     ****TRIPTI CHOURASIYA****  ****                   ****[****BWU/BTA/23/****724****]**
+
+**     ****APURBA MUKHERJEE****  ****     ****             ****[****BWU/BTA/23/****177****]**
+
+*in partial fulfillment for the award of the degree** *
+
+*of*
+
+**BACHELOR OF TECHNOLOGY **
+
+IN
+
+COMPUTER SCIENCE & ENGINEERING – ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING
+
+**BRAINWARE UNIVERSITY**
+
+398, Ramkrishnapur Rd, near Jagadighata Market, Barasat, Kolkata, West Bengal - 700125
+
+		
+
+		
+
+		
+
+		
+
+		
+
+AUGUST, 2026
+
+	
+
+**CREDIT CARD FRAUD AND ALERT SYSTEM USING DEEP LEARNING AND NLP**
+
+***Submitted by***
+
+**Preetam Bhattacharjee**** **** ****[230130017****37**** of 2023-24****,**** ****230103321****24****]**
+
+**Gourab Das**** ****                        **** ****[230130017****39**** ****of 2023-24****, 230103321****26****]**
+
+**Tripti**** Chourasiya**** ****           **** ****[****24013105717**** ****of 202****4****-2****5****, ****24011332058****]**
+
+**Apurba Mukherjee**** ****         **** ****[****2301****3001781**** ****of 202****3****-2****4****, ****23010332168****]**
+
+***in partial fulfillment for the award of the degree***
+
+***of***
+
+**BACHELOR OF TECHNOLOGY**** – ****COMPUTER SCIENCE ****&**** ENGINEERING**** – A****RTIFICIAL INTELLIGENCE AND MACHINE LEARNING**
+
+***in***
+
+**DEPARTMENT OF  COMPUTER SCIENCE ****&**** ENGINEERING**** ****– ****ARTIFICIAL INTELLIGENCE**
+
+**Supervisor Signature**
+
+		
+
+		
+
+		
+
+	
+
+	
+
+	
+
+	
+
+# Table of Contents
+
+	1. Abstract	4
+
+	2. Introduction	4
+
+	3. Literature Review	4
+
+	4. Methodology	4
+
+	4.1 Dataset	4
+
+	4.2 Data Cleaning	5
+
+	4.3 Feature Preparation	5
+
+	4.4 Proposed System Flow	5
+
+	5. Result & Discussion	6
+
+	6. Conclusion	6
+
+	7. References	7
+
+# 1. Abstract
+
+Credit card fraud is increasing with the growth of digital transactions, leading to major financial losses for banks and customers. This project proposes a hybrid Credit Card Fraud and Alert System that combines Deep Learning (LSTM/CNN) to learn patterns from transaction data with Natural Language Processing (NLP) to analyse accompanying transaction text, in order to detect fraud more accurately and generate real-time alerts. At this Review-1 stage, the work completed includes problem identification, a brief literature survey, and collection and cleaning of the Kaggle Credit Card Fraud Detection dataset (284,807 transactions, 492 frauds), along with the design of the overall proposed system flow. The next phase will involve implementing and training the deep learning and NLP models and evaluating them using standard metrics such as precision, recall, F1-score, and AUC-ROC.
+
+# 2. Introduction
+
+Credit card fraud is a growing concern as digital and online transactions increase, causing major financial losses to banks and customers. Traditional rule-based and machine learning methods often fail to detect new and evolving fraud patterns because they depend on fixed rules and manually chosen features. This project proposes a hybrid approach that combines Deep Learning (LSTM/CNN) with Natural Language Processing (NLP) to detect fraudulent credit card transactions more accurately and generate real-time alerts. At this initial review stage, the focus has been on understanding the problem, surveying existing work, and collecting and preparing a suitable dataset.
+
+Objective: To build a fraud detection and alert system that learns patterns from transaction data using deep learning and analyses accompanying textual/transaction information using NLP, in order to flag suspicious transactions with high accuracy and low false alarms.
+
+# 3. Literature Review
+
+A short survey of existing work was carried out to understand current approaches. Alghofaili et al. (2020)[1] used an LSTM model to capture sequential spending patterns for fraud detection. Chen and Lai (2021)[2] applied a deep CNN for fraud detection combined with an alert mechanism. Mienye and Jere (2024)[3] reviewed deep learning methods for fraud detection and highlighted class imbalance and interpretability as key open challenges. Studies on NLP-based fraud detection show that analysing transaction text/narration can reveal suspicious patterns that numeric data alone may miss. These studies confirm that hybrid deep learning + NLP approaches, along with proper handling of imbalanced data, generally outperform traditional single-model methods, which motivates the direction of this project.
+
+# 4. Methodology
+
+## 4.1 Dataset
+
+The dataset used is the publicly available ‘Credit Card Fraud Detection’ dataset from Kaggle[4]. It contains 284,807 credit card transactions made by European cardholders, of which only 492 are fraudulent (about 0.17% of all transactions), making the dataset highly imbalanced. It includes 30 features: Time, Amount, 28 PCA-transformed anonymised features (V1–V28), and the target label Class (0 = genuine, 1 = fraud).
+
+## 4.2 Data Cleaning
+
+- Checked the dataset for missing/null values and duplicate rows.
+
+- Verified data types and confirmed there were no inconsistent entries.
+
+- Confirmed the extreme class imbalance (fraud vs. genuine) through class-distribution analysis.
+
+## 4.3 Feature Preparation
+
+- Applied standard scaling to the ‘Amount’ and ‘Time’ columns (other features are already PCA-normalised).
+
+- Planned use of SMOTE (oversampling) to balance the minority fraud class before model training.
+
+- Planned an 70:15:15 train / validation / test split, stratified on the fraud label.
+
+## 4.4 Proposed System Flow
+
+The figure below summarises the overall plan and target of the project, from data collection through to fraud alert evaluation. Deep learning (LSTM/CNN) will process structured transaction features, while the NLP branch will analyse any accompanying transaction text, and both outputs will be fused for a final fraud decision that triggers an alert.
+
+# 5. Result & Discussion
+
+As this is the first review, no model has been trained yet, so no performance results are available at this stage. The work completed so far consists of dataset collection, data cleaning, and feature preparation as described above. Initial exploration of the dataset confirms severe class imbalance, which justifies the planned use of SMOTE before training. Based on the reviewed literature, the proposed hybrid LSTM/CNN + NLP model is expected to achieve better recall and F1-score on the fraud class than a single-model baseline. Detailed quantitative results will be presented in Review-2 after model implementation and training.
+
+# 6. Conclusion
+
+This review report has covered the problem background, a brief literature survey, and the collection and cleaning of the Kaggle credit card fraud dataset, along with the overall proposed system flow. In the next phase (Review-2), the deep learning and NLP models will be implemented and trained, and preliminary results will be evaluated using metrics such as precision, recall, F1-score, and AUC-ROC.
+
+# 7. References
+
+[1]  Alghofaili, Y., Albattah, A. and Rassam, M.A. (2020) 'A financial fraud detection model based on LSTM deep learning technique', Journal of Applied Security Research, 15(4), pp.498-516.
+
+[2]  Chen, J.I.Z. and Lai, K.-L. (2021) 'Deep convolution neural network model for credit-card fraud detection and alert', Journal of Artificial Intelligence, 3(2), pp.101-112.
+
+[3]  Mienye, I.D. and Jere, N. (2024) 'Deep learning for credit card fraud detection: A review of algorithms, challenges, and solutions', IEEE Access, 12, pp.96893-96910.
+
+[4]  Kaggle (n.d.) Credit Card Fraud Detection Dataset. Available at: https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud (Accessed: 4 August 2026).
+
+3
